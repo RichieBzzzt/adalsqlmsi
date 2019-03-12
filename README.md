@@ -1,0 +1,2 @@
+# adalsqlmsi
+adalsql msi
