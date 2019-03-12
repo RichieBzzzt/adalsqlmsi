@@ -1,13 +1,19 @@
 # adalsqlmsi
 adalsql msi
 
+[Blog post](https://bzzzt.io/post/2019-03/2019-03-12-fixing-horrible-adalsql-issue-part-2/) that references back to this repo, but explains the purpose a bit better.
+
+## tl;dr
+
+If you have aladsqll issues, run script below to download an install msi.
+
 ```powershell
 
 Function Install-ADAuthenticationLibraryforSQLServer {
     # from https://bzzzt.io/post/2018-05-25-horrible-adalsql-issue/
     $workingFolder = Join-Path $env:temp ([System.IO.Path]::GetRandomFileName())
     New-Item -ItemType Directory -Force -Path $workingFolder
-    $uri = ""
+    $uri = "https://raw.githubusercontent.com/RichieBzzzt/adalsqlmsi/master/msi/adalsql.msi"
 
 
     $splitArray = $uri -split "/"
@@ -27,7 +33,7 @@ Function Install-ADAuthenticationLibraryforSQLServer {
         Write-Host "Running MsiExec.exe /uninstall {4EE99065-01C6-49DD-9EC6-E08AA5B13491} /quiet"
         Start-Process -FilePath "MsiExec.exe" -ArgumentList  "/uninstall {4EE99065-01C6-49DD-9EC6-E08AA5B13491} /quiet" -Wait -NoNewWindow
     } catch {
-        Write-Host "oh dear install did not work"
+        Write-Host "oh dear uninstall did not work"
         $fail = $_.Exception
         Write-Error $fail
         Throw
