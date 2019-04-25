@@ -10,7 +10,7 @@ If you have aladsqll issues, run script below to download an install msi.
 ```powershell
 
 Function Install-ADAuthenticationLibraryforSQLServer {
-    # from https://bzzzt.io/post/2018-05-25-horrible-adalsql-issue/
+    # from https://bzzzt.io/post/2019-03/2019-03-12-fixing-horrible-adalsql-issue-part-2/
     $workingFolder = Join-Path $env:temp ([System.IO.Path]::GetRandomFileName())
     New-Item -ItemType Directory -Force -Path $workingFolder
     $uri = "https://raw.githubusercontent.com/RichieBzzzt/adalsqlmsi/master/msi/adalsql.msi"
@@ -21,7 +21,7 @@ Function Install-ADAuthenticationLibraryforSQLServer {
 
     $Installer = Join-Path -Path $WorkingFolder -ChildPath $fileName
     try {
-        Invoke-TlsWebRequest -Uri $uri -OutFile $Installer
+        Invoke-WebRequest -Uri $uri -OutFile $Installer
     } catch {
         Throw $_.Exception
     }
